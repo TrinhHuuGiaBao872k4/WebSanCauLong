@@ -1,33 +1,180 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
 
-<main>
-    <section class="row" aria-labelledby="aspnetTitle">
-        <h1 id="title">ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Trang Chủ - Đặt Sân Cầu Lông</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .projects-thumb {
+            position: relative;
+            width: 100%;
+            height: 370px; /* Tăng chiều cao tổng thể */
+            overflow: hidden;
+            border-radius: 12px;
+            background: white;
+            text-align: center;
+            padding: 15px;
+            transition: border 0.3s ease-in-out;
+        }
+
+            .projects-thumb:hover {
+                border: 3px solid orange; /* Khi hover, viền cam xuất hiện */
+            }
+
+        .projects-image {
+            width: 100%;
+            height: 75%;
+            object-fit: cover;
+            border-radius: 20px; /* Bo góc ảnh nhiều hơn */
+            transform: rotate(-3deg) scale(0.9);
+            transition: transform 0.3s ease-in-out, border-radius 0.3s ease-in-out;
+            margin-top: 100px; /* Đẩy ảnh xuống để tạo khoảng cách với chữ */
+        }
+
+        .projects-thumb:hover .projects-image {
+            transform: rotate(0deg) scale(1);
+            border-radius: 12px; /* Khi hover, bo góc ảnh giảm xuống nhẹ */
+        }
+
+        .projects-info {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            background-color:orange;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .section-title-wrap {
+            background-color: orange; /* Nền xanh lá */
+            border-radius: 12px;
+            padding: 20px 30px;
+        }
+
+        .avatar-image {
+            width: 120px; /* Kích thước ảnh */
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%; /* Bo tròn ảnh */
+            border: 5px solid white; /* Viền trắng quanh ảnh */
+        }
+
+        .section-title-wrap h2 {
+            font-size: 32px;
+            font-weight: bold;
+            color: white;
+            margin-left: 20px; /* Tạo khoảng cách giữa chữ và ảnh */
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Danh Sách Sân Cầu Lông</h2>
+        <div class="row">
+            @foreach (var san in Model)
+            {
+                <div class="col-md-3 mb-4">
+                    <div class="card">
+                        <img src="/images/badminton-court.jpg" class="card-img-top" alt="Sân Cầu Lông">
+                        <div class="card-body">
+                            <h5 class="card-title">@san[1]</h5> <!-- TenSan -->
+                            <p class="card-text"><strong>Địa chỉ:</strong> @san[2]</p> <!-- DiaChi -->
+                            <p class="card-text"><strong>Giá:</strong> @san[4] VND</p> <!-- GiaSan -->
+                            <a href="/Home/ChiTietSan/@san[0]" class="btn btn-primary">Xem chi tiết</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <section class="projects section-padding" id="refs_library">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-8 col-md-8 col-12 ms-auto">
+                    <div class="section-title-wrap d-flex justify-content-center align-items-center mb-4">
+                        <img src="https://www.tba.mycourt.vn/upload/assets//user-storages/00003/white-desk-work-study-aesthetics.jpg" class="avatar-image img-fluid" alt="">
+
+                        <h2 class="text-white ms-4 mb-0">Hình ảnh sân cầu lông</h2>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="projects-thumb">
+                        <div class="projects-info">
+                            <small class="projects-tag">Hình ảnh sân</small>
+                            <h3 class="projects-title">CLB TBA</h3>
+                        </div>
+                        <a href="https://www.tba.mycourt.vn/upload/assets//user-storages/00003//thu-vien/anh1.jpg" class="popup-image">
+                            <img src="https://www.tba.mycourt.vn/upload/assets//user-storages/00003//thu-vien/anh1.jpg" class="projects-image img-fluid" alt="">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="projects-thumb">
+                        <div class="projects-info">
+                            <small class="projects-tag">Hình ảnh sân</small>
+                            <h3 class="projects-title">Tập Luyện</h3>
+                        </div>
+                        <a href="https://www.tba.mycourt.vn/upload/assets//user-storages/00003//thu-vien/anh2.jpg" class="popup-image">
+                            <img src="https://www.tba.mycourt.vn/upload/assets//user-storages/00003//thu-vien/anh2.jpg" class="projects-image img-fluid" alt="">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="projects-thumb">
+                        <div class="projects-info">
+                            <small class="projects-tag">Hình ảnh sân</small>
+                            <h3 class="projects-title">Toàn Cảnh</h3>
+                        </div>
+                        <a href="https://www.tba.mycourt.vn/upload/assets//user-storages/00003//thu-vien/anh7.jpg" class="popup-image">
+                            <img src="https://www.tba.mycourt.vn/upload/assets//user-storages/00003//thu-vien/anh7.jpg" class="projects-image img-fluid" alt="">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="d-none">
+                    <a href="https://www.tba.mycourt.vn/upload/assets//user-storages/00003//thu-vien/anh3.jpg" class="popup-image">
+                        <img src="https://www.tba.mycourt.vn/upload/assets//user-storages/00003//thu-vien/anh3.jpg" class="projects-image img-fluid" alt="">
+                    </a>
+                    <a href="https://www.tba.mycourt.vn/upload/assets//user-storages/00003//thu-vien/anh5.jpg" class="popup-image">
+                        <img src="https://www.tba.mycourt.vn/upload/assets//user-storages/00003//thu-vien/anh5.jpg" class="projects-image img-fluid" alt="">
+                    </a>
+                    <a href="https://www.tba.mycourt.vn/upload/assets//user-storages/00003//thu-vien/anh6.jpg" class="popup-image">
+                        <img src="https://www.tba.mycourt.vn/upload/assets//user-storages/00003//thu-vien/anh6.jpg" class="projects-image img-fluid" alt="">
+                    </a>
+                    <a href="https://www.tba.mycourt.vn/upload/assets//user-storages/00003//thu-vien/anh7.jpg" class="popup-image">
+                        <img src="https://www.tba.mycourt.vn/upload/assets//user-storages/00003//thu-vien/anh7.jpg" class="projects-image img-fluid" alt="">
+                    </a>
+                    <a href="https://www.tba.mycourt.vn/0" class="popup-image">
+                        <img src="https://www.tba.mycourt.vn/0" class="projects-image img-fluid" alt="">
+                    </a>
+                    <a href="https://www.tba.mycourt.vn/0" class="popup-image">
+                        <img src="https://www.tba.mycourt.vn/0" class="projects-image img-fluid" alt="">
+                    </a>
+                </div>
+
+            </div>
+        </div>
     </section>
 
-    <div class="row">
-        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-            <h2 id="gettingStartedTitle">Getting started</h2>
-            <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
-            </p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="librariesTitle">
-            <h2 id="librariesTitle">Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="hostingTitle">
-            <h2 id="hostingTitle">Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-        </section>
-    </div>
-</main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
