@@ -18,16 +18,29 @@ namespace WebSanCauLong.Controllers
             ArrayList danhSachSan = _dataModel.get(query);
             return View(danhSachSan);
         }
-        // Chi tiết sân
         public ActionResult ChiTietSan(int id)
         {
-            string query = $"SELECT * FROM San WHERE SanID = {id}";
+            string query = $"SELECT SanID, TenSan, DiaChi, GiaSan, LoaiSan, TrangThai, MoTa, HinhAnh FROM San WHERE SanID = {id}";
             ArrayList san = _dataModel.get(query);
-            if (san.Count == 0)
+
+            if (san.Count > 0)
+            {
+                ArrayList row = (ArrayList)san[0];
+                ViewBag.SanID = row[0];
+                ViewBag.TenSan = row[1];
+                ViewBag.DiaChi = row[2];
+                ViewBag.GiaSan = row[3];
+                ViewBag.LoaiSan = row[4];
+                ViewBag.TrangThai = row[5];
+                ViewBag.MoTa = row[6];
+                ViewBag.HinhAnh = row[7];
+            }
+            else
             {
                 return HttpNotFound();
             }
-            return View(san[0]);
+
+            return View();
         }
 
         // Tìm kiếm sân

@@ -88,12 +88,12 @@
             {
                 <div class="col-md-3 mb-4">
                     <div class="card">
-                        <img src="/images/badminton-court.jpg" class="card-img-top" alt="Sân Cầu Lông">
+                        <img src="/images/@san[7]" class="card-img-top" alt="Sân Cầu Lông">
                         <div class="card-body">
                             <h5 class="card-title">@san[1]</h5> <!-- TenSan -->
                             <p class="card-text"><strong>Địa chỉ:</strong> @san[2]</p> <!-- DiaChi -->
                             <p class="card-text"><strong>Giá:</strong> @san[4] VND</p> <!-- GiaSan -->
-                            <a href="/Home/ChiTietSan/@san[0]" class="btn btn-primary">Xem chi tiết</a>
+                            <a href="@Url.Action("ChiTietSan", "Home", new { id = Convert.ToInt32(san[0]) })" class="btn btn-primary">Xem chi tiết</a>
                         </div>
                     </div>
                 </div>

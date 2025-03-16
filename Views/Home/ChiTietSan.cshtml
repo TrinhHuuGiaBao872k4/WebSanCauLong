@@ -1,0 +1,32 @@
+﻿@model WebSanCauLong.Models.DataModel
+
+@{
+    ViewBag.Title = "ChiTietSan";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chi Tiết Sân</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card">
+            <img src="/images/@ViewBag.HinhAnh" class="card-img-top" alt="Hình ảnh sân">
+            <div class="card-body">
+                <h2 class="card-title">@ViewBag.TenSan</h2>
+                <p class="text-muted">Địa chỉ: @ViewBag.DiaChi</p>
+                <p><strong>Giá thuê:</strong> @ViewBag.GiaSan VND/giờ</p>
+                <p><strong>Loại sân:</strong> @ViewBag.LoaiSan</p>
+                <p><strong>Trạng thái:</strong> @ViewBag.TrangThai</p>
+                <p class="card-text">@ViewBag.MoTa</p>
+                <a href="#" class="btn btn-primary">Đặt sân ngay</a>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
