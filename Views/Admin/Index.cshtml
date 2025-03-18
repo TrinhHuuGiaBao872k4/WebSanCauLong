@@ -1,0 +1,157 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .dashboard-container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: linear-gradient(135deg, #6B46C1 0%, #4299E1 100%);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            text-decoration: none;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+            .stat-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 50%;
+            background: #f0f4f8;
+        }
+
+        .stat-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2d3748;
+        }
+
+        .stat-description {
+            color: #718096;
+            font-size: 0.9em;
+        }
+
+        .quick-actions {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .action-title {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #2d3748;
+            text-align: center;
+        }
+
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .action-button {
+            padding: 15px;
+            background: #4299E1;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-align: center;
+            text-decoration: none;
+        }
+
+            .action-button:hover {
+                background: #3182CE;
+            }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="welcome-section">
+            <h1 style="margin: 0; font-size: 2em;">Chào Mừng Đến Trang Quản Trị</h1>
+            <p style="margin-top: 10px;">Hệ thống quản lý đặt sân cầu lông - Huflit Badminton</p>
+        </div>
+
+        <div class="stats-grid">
+            <a href="/Admin/Sach" class="stat-card">
+                <img src="~/images/" alt="" class="stat-icon">
+                <div class="stat-title">Quản Lý Sân</div>
+                <div class="stat-description">Thêm, sửa, xóa và quản lý sân</div>
+            </a>
+
+            <a href="/Admin/DonHang" class="stat-card">
+                <img src="~/images/" alt="Orders" class="stat-icon">
+                <div class="stat-title">Đơn đặt sân</div>
+                <div class="stat-description">Xem và quản lý đơn đặt sân</div>
+            </a>
+
+            <a href="/Admin/Loai" class="stat-card">
+                <img src="~/images/" alt="Categories" class="stat-icon">
+                <div class="stat-title">Lịch đặt</div>
+                <div class="stat-description">Quản lý lịch đặt sân</div>
+            </a>
+
+            <a href="/Admin/NXB" class="stat-card">
+                <img src="~/images/" alt="Publishers" class="stat-icon">
+                <div class="stat-title">Thống kê</div>
+                <div class="stat-description">Quản lý thống kê</div>
+            </a>
+        </div>
+
+        <div class="quick-actions">
+            <h2 class="action-title">Thao Tác Nhanh</h2>
+            <div class="action-grid">
+                <a href="/Admin/ThemmoiSach" class="action-button">Thêm Sân Mới</a>
+                <a href="/Admin/DonHang" class="action-button">Xem Đơn Đặt Sân Mới</a>
+                <a href="/Admin/Logout" class="action-button">Đăng Xuất</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
