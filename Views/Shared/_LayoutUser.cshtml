@@ -174,7 +174,7 @@
                                                     @*
                                                         @Html.Action("Nhaxuatban", "BookStore")*@
                                                 </li>
-                                                <li><a href="#" class="text-decoration-none">ĐẶT SÂN</a></li>
+                                                <li><a href="@Url.Action("DanhSachSanTrong","San")" class="text-decoration-none">ĐẶT SÂN</a></li>
                                                 <li><a href="#refs_library" class="text-decoration-none">HÌNH ẢNH SÂN</a></li>
                                                 <li><a href="#" class="text-decoration-none">THEO DÕI SÂN ĐẶT</a></li>
                                                 <li><a href="hoitro.html" class="text-decoration-none">HỖ TRỢ</a></li>
@@ -308,132 +308,157 @@
                 </div>
             </div>
         </section>
-     }
+    }
 
-        <!-- End Shop Newsletter -->
-        <!-- Start Footer Area -->
-        <footer class="footer">
-            <!-- Footer Top -->
-            <div class="footer-top section" style="padding: 40px 0;">
-                <div class="container">
+    <!-- End Shop Newsletter -->
+    <!-- Start Footer Area -->
+    <footer class="footer">
+        <!-- Footer Top -->
+        <div class="footer-top section" style="padding: 40px 0;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <!-- Single Widget -->
+                        <div class="single-footer about">
+                            <div class="logo" style="max-width: 250px; margin-bottom: 15px;">
+                                <a @*href="@Url.Action("Index","BookStore")"*@>
+                                    <img src="~/images/bookshoplo.png" alt="#" style="max-width: 100%; height: auto;">
+                                </a>
+                            </div>
+                            <p class="text" style="font-size: 14px; margin-bottom: 10px;">Website đặt sân trực tuyến của HUFLIT BADMINTON, hỗ trợ 24/7 cùng nhiều ưu đẫi hấp dẫn. Luôn luôn cập nhật thông tin của các sân cầu lông nhanh nhất.</p>
+                            <p class="text" style="font-size: 14px;">Cần hỗ trợ liên hệ với chúng tôi: <span><a href="tel:0338380684" class="text-decoration-none">+8433 838 0684</a></span></p>
+                        </div>
+                        <!-- End Single Widget -->
+                    </div>
+                    <div class="col-lg-2 col-md-6 col-12">
+                        <!-- Single Widget -->
+                        <div class="single-footer links">
+                            <h4 style="font-size: 16px; margin-bottom: 15px;">Information</h4>
+                            <ul style="font-size: 14px;">
+                                <li><a href="#" class="text-decoration-none">About Us</a></li>
+                                <li><a href="#" class="text-decoration-none">Faq</a></li>
+                                <li><a href="#" class="text-decoration-none">Terms & Conditions</a></li>
+                                <li><a href="#" class="text-decoration-none">Contact Us</a></li>
+                                <li><a href="#" class="text-decoration-none">Help</a></li>
+                            </ul>
+                        </div>
+                        <!-- End Single Widget -->
+                    </div>
+                    <div class="col-lg-2 col-md-6 col-12">
+                        <!-- Single Widget -->
+                        <div class="single-footer links">
+                            <h4 style="font-size: 16px; margin-bottom: 15px;">Customer Service</h4>
+                            <ul style="font-size: 14px;">
+                                <li><a href="#" class="text-decoration-none">Payment Methods</a></li>
+                                <li><a href="#" class="text-decoration-none">Money-back</a></li>
+                                <li><a href="#" class="text-decoration-none">Cancel</a></li>
+                                <li><a href="#" class="text-decoration-none">Privacy Policy</a></li>
+                            </ul>
+                        </div>
+                        <!-- End Single Widget -->
+                    </div>
+                    <div class="col-lg-2 col-md-6 col-12">
+                        <!-- Single Widget -->
+                        <div class="single-footer social">
+                            <h4 style="font-size: 16px; margin-bottom: 15px;">Thông tin</h4>
+                            <!-- Single Widget -->
+                            <div class="contact">
+                                <ul style="font-size: 14px;">
+                                    <li>24/7 Sư Vạn Hạnh, Quận 10, Tp. Hồ Chí Minh</li>
+                                    <li>Nhà Quản lý: Huflit Badminton</li>
+                                    <li>HuflitBadminton@gmail.com</li>
+                                    <li>+8433 838 0684</li>
+                                </ul>
+                            </div>
+                            <!-- End Single Widget -->
+                            <ul class="social-icons" style="margin-top: 15px;">
+                                <li><a href="https://www.facebook.com/sancaulong18Bconghoa" class="text-decoration-none"><i class="ti-facebook"></i></a></li>
+                                <li><a href="#" class="text-decoration-none"><i class="ti-twitter"></i></a></li>
+                                <li><a href="#" class="text-decoration-none"><i class="ti-flickr"></i></a></li>
+                                <li><a href="#" class="text-decoration-none"><i class="ti-instagram"></i></a></li>
+                            </ul>
+                        </div>
+                        <!-- End Single Widget -->
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-12">
+                        <div class="col-md-12 mb-3">
+                            <div class="rounded-2" id="map" style="height: 400px; width: 400px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Footer Top -->
+        <div class="copyright" style="padding: 15px 0;">
+            <div class="container">
+                <div class="inner">
                     <div class="row">
-                        <div class="col-lg-5 col-md-6 col-12">
-                            <!-- Single Widget -->
-                            <div class="single-footer about">
-                                <div class="logo" style="max-width: 250px; margin-bottom: 15px;">
-                                    <a @*href="@Url.Action("Index","BookStore")"*@>
-                                        <img src="~/images/bookshoplo.png" alt="#" style="max-width: 100%; height: auto;">
-                                    </a>
-                                </div>
-                                <p class="text" style="font-size: 14px; margin-bottom: 10px;">Website đặt sân trực tuyến của HUFLIT BADMINTON, hỗ trợ 24/7 cùng nhiều ưu đẫi hấp dẫn. Luôn luôn cập nhật thông tin của các sân cầu lông nhanh nhất.</p>
-                                <p class="text" style="font-size: 14px;">Cần hỗ trợ liên hệ với chúng tôi: <span><a href="tel:0338380684" class="text-decoration-none">+8433 838 0684</a></span></p>
+                        <div class="col-lg-6 col-12">
+                            <div class="left">
+                                <p style="font-size: 14px; margin: 0;">Copyright © 2025 By <a href="https://www.facebook.com/sancaulong18Bconghoa" target="_blank" class="text-decoration-none">HUFLIT BADMINTON</a>  -  033 838 0684</p>
                             </div>
-                            <!-- End Single Widget -->
                         </div>
-                        <div class="col-lg-2 col-md-6 col-12">
-                            <!-- Single Widget -->
-                            <div class="single-footer links">
-                                <h4 style="font-size: 16px; margin-bottom: 15px;">Information</h4>
-                                <ul style="font-size: 14px;">
-                                    <li><a href="#" class="text-decoration-none">About Us</a></li>
-                                    <li><a href="#" class="text-decoration-none">Faq</a></li>
-                                    <li><a href="#" class="text-decoration-none">Terms & Conditions</a></li>
-                                    <li><a href="#" class="text-decoration-none">Contact Us</a></li>
-                                    <li><a href="#" class="text-decoration-none">Help</a></li>
-                                </ul>
-                            </div>
-                            <!-- End Single Widget -->
-                        </div>
-                        <div class="col-lg-2 col-md-6 col-12">
-                            <!-- Single Widget -->
-                            <div class="single-footer links">
-                                <h4 style="font-size: 16px; margin-bottom: 15px;">Customer Service</h4>
-                                <ul style="font-size: 14px;">
-                                    <li><a href="#" class="text-decoration-none">Payment Methods</a></li>
-                                    <li><a href="#" class="text-decoration-none">Money-back</a></li>
-                                    <li><a href="#" class="text-decoration-none">Cancel</a></li>
-                                    <li><a href="#" class="text-decoration-none">Privacy Policy</a></li>
-                                </ul>
-                            </div>
-                            <!-- End Single Widget -->
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-12">
-                            <!-- Single Widget -->
-                            <div class="single-footer social">
-                                <h4 style="font-size: 16px; margin-bottom: 15px;">Thông tin</h4>
-                                <!-- Single Widget -->
-                                <div class="contact">
-                                    <ul style="font-size: 14px;">
-                                        <li>24/7 Sư Vạn Hạnh, Quận 10, Tp. Hồ Chí Minh</li>
-                                        <li>Nhà Quản lý: Huflit Badminton</li>
-                                        <li>HuflitBadminton@gmail.com</li>
-                                        <li>+8433 838 0684</li>
-                                    </ul>
-                                </div>
-                                <!-- End Single Widget -->
-                                <ul class="social-icons" style="margin-top: 15px;">
-                                    <li><a href="https://www.facebook.com/sancaulong18Bconghoa" class="text-decoration-none"><i class="ti-facebook"></i></a></li>
-                                    <li><a href="#" class="text-decoration-none"><i class="ti-twitter"></i></a></li>
-                                    <li><a href="#" class="text-decoration-none"><i class="ti-flickr"></i></a></li>
-                                    <li><a href="#" class="text-decoration-none"><i class="ti-instagram"></i></a></li>
-                                </ul>
-                            </div>
-                            <!-- End Single Widget -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- End Footer Top -->
-            <div class="copyright" style="padding: 15px 0;">
-                <div class="container">
-                    <div class="inner">
-                        <div class="row">
-                            <div class="col-lg-6 col-12">
-                                <div class="left">
-                                    <p style="font-size: 14px; margin: 0;">Copyright © 2025 By <a href="https://www.facebook.com/sancaulong18Bconghoa" target="_blank" class="text-decoration-none">HUFLIT BADMINTON</a>  -  033 838 0684</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-12">
-                                <div class="right">
-                                    <img src="images/payments.png" alt="#" style="max-height: 30px;">
-                                </div>
+                        <div class="col-lg-6 col-12">
+                            <div class="right">
+                                <img src="images/payments.png" alt="#" style="max-height: 30px;">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </footer>
-        <!-- /End Footer Area -->
-        <!-- Jquery -->
-        <script src="~/Scripts/jquery.min.js"></script>
-        <script src="~/Scripts/jquery-migrate-3.0.0.js"></script>
-        <script src="~/Scripts/jquery-ui.min.js"></script>
-        <!-- Popper JS -->
-        <script src="~/Scripts/popper.min.js"></script>
-        <!-- Bootstrap JS -->
-        <script src="~/Scripts/bootstrap.min.js"></script>
-        <!-- Color JS -->
-        <script src="~/Scripts/colors.js"></script>
-        <!-- Slicknav JS -->
-        <script src="~/Scripts/slicknav.min.js"></script>
-        <!-- Owl Carousel JS -->
-        <script src="~/Scripts/owl-carousel.js"></script>
-x
-<!-- Magnific Popup JS -->
-<script src="~/Scripts/magnific-popup.js"></script>
-<!-- Waypoints JS -->
-<script src="~/Scripts/waypoints.min.js"></script>
-<!-- Countdown JS -->
-<script src="~/Scripts/finalcountdown.min.js"></script>
-<!-- Nice Select JS -->
-<script src="~/Scripts/nicesellect.js"></script>
-<!-- Flex Slider JS -->
-<script src="~/Scripts/flex-slider.js"></script>
-<!-- ScrollUp JS -->
-<script src="~/Scripts/scrollup.js"></script>
-<!-- Onepage Nav JS -->
-<script src="~/Scripts/onepage-nav.min.js"></script>
-<script src="~/Scripts/easing.js"></script>
-<script src="~/Scripts/active.js"></script>
+        </div>
+    </footer>
+    <!-- /End Footer Area -->
+    <!-- Jquery -->
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/jquery-migrate-3.0.0.js"></script>
+    <script src="~/Scripts/jquery-ui.min.js"></script>
+    <!-- Popper JS -->
+    <script src="~/Scripts/popper.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <!-- Color JS -->
+    <script src="~/Scripts/colors.js"></script>
+    <!-- Slicknav JS -->
+    <script src="~/Scripts/slicknav.min.js"></script>
+    <!-- Owl Carousel JS -->
+    <script src="~/Scripts/owl-carousel.js"></script>
+    x
+    <!-- Magnific Popup JS -->
+    <script src="~/Scripts/magnific-popup.js"></script>
+    <!-- Waypoints JS -->
+    <script src="~/Scripts/waypoints.min.js"></script>
+    <!-- Countdown JS -->
+    <script src="~/Scripts/finalcountdown.min.js"></script>
+    <!-- Nice Select JS -->
+    <script src="~/Scripts/nicesellect.js"></script>
+    <!-- Flex Slider JS -->
+    <script src="~/Scripts/flex-slider.js"></script>
+    <!-- ScrollUp JS -->
+    <script src="~/Scripts/scrollup.js"></script>
+    <!-- Onepage Nav JS -->
+    <script src="~/Scripts/onepage-nav.min.js"></script>
+    <script src="~/Scripts/easing.js"></script>
+    <script src="~/Scripts/active.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJKlSX0lQKufoBwYpbBKUKir5h45amcFM&callback=initMap"></script>
+    <script>
+        function initMap() {
+            // Tọa độ để trung tâm bản đồ
+            var myLatLng = { lat: 10.776101071657394, lng: 106.66735983035177 };
+
+            // Tạo bản đồ và đặt tọa độ
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 19,
+                center: myLatLng
+            });
+
+            // Tạo một marker và đặt nó lên bản đồ
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                title: 'Huflit'
+            });
+        }
+    </script>
 </body>
 </html>

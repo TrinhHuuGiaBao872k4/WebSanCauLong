@@ -14,7 +14,7 @@ namespace WebSanCauLong.Controllers
         private readonly DataModel _dataModel = new DataModel();
         public ActionResult Index(int? page)
         {
-            string query = "SELECT TOP 4 * FROM San WHERE TrangThai = 'Còn trống' ORDER BY NEWID()";
+            string query = "SELECT TOP 4 * FROM San WHERE TrangThai = N'Còn trống' ORDER BY NEWID()";
             ArrayList danhSachSan = _dataModel.get(query);
             return View(danhSachSan);
         }

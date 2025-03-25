@@ -1,0 +1,39 @@
+﻿@model IEnumerable<WebSanCauLong.Models.ViewModels.San>
+
+@{
+    ViewBag.Title = "DanhSachSan";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Quản lý sân</h2>
+<a href="@Url.Action("ThemSan", "Admin")" class="btn btn-success">Thêm sân mới</a>
+<table class="table table-bordered mt-3">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên sân</th>
+            <th>Địa chỉ</th>
+            <th>Loại sân</th>
+            <th>Giá</th>
+            <th>Trạng thái</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var san in Model)
+        {
+            <tr>
+                <td>@san.SanID</td>
+                <td>@san.TenSan</td>
+                <td>@san.DiaChi</td>
+                <td>@san.LoaiSan</td>
+                <td>@san.GiaSan</td>
+                <td>@san.TrangThai</td>
+                <td>
+                    <a href="@Url.Action("SuaSan", "Admin", new { id = san.SanID })" class="btn btn-warning">Sửa</a>
+                    <a href="@Url.Action("XoaSan", "Admin", new { id = san.SanID })" class="btn btn-danger">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

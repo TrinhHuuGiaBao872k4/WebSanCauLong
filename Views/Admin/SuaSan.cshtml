@@ -1,0 +1,89 @@
+﻿@model WebSanCauLong.Models.ViewModels.San
+
+@{
+    ViewBag.Title = "SuaSan";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Sửa Thông Tin Sân</h2>
+
+    @using (Html.BeginForm("SuaSan", "Admin", FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.SanID)
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.TenSan, new { @class = "form-label" })
+            @Html.TextBoxFor(model => model.TenSan, new { @class = "form-control", required = "required", placeholder = "Nhập tên sân" })
+            <div class="invalid-feedback">Vui lòng nhập tên sân.</div>
+            @Html.ValidationMessageFor(model => model.TenSan, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.DiaChi, new { @class = "form-label" })
+            @Html.TextBoxFor(model => model.DiaChi, new { @class = "form-control", required = "required", placeholder = "Nhập địa chỉ" })
+            <div class="invalid-feedback">Vui lòng nhập địa chỉ sân.</div>
+            @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.LoaiSan, new { @class = "form-label" })
+            @Html.TextBoxFor(model => model.LoaiSan, new { @class = "form-control", required = "required", placeholder = "Nhập loại sân" })
+            <div class="invalid-feedback">Vui lòng nhập loại sân.</div>
+            @Html.ValidationMessageFor(model => model.LoaiSan, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.GiaSan, new { @class = "form-label" })
+            @Html.TextBoxFor(model => model.GiaSan, new { @class = "form-control", type = "number", required = "required", placeholder = "Nhập giá sân" })
+            <div class="invalid-feedback">Vui lòng nhập giá sân.</div>
+            @Html.ValidationMessageFor(model => model.GiaSan, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.MoTa, new { @class = "form-label" })
+            @Html.TextAreaFor(model => model.MoTa, new { @class = "form-control", rows = "3", placeholder = "Nhập mô tả sân" })
+            @Html.ValidationMessageFor(model => model.MoTa, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.TrangThai, new { @class = "form-label" })
+            @Html.DropDownListFor(model => model.TrangThai, new SelectList(new[]
+            {
+                new { Value = "Còn trống", Text = "Còn trống" },
+                new { Value = "Đang được đặt", Text = "Đang được đặt" }
+            }, "Value", "Text"), "Chọn trạng thái", new { @class = "form-select", required = "required" })
+            <div class="invalid-feedback">Vui lòng chọn trạng thái sân.</div>
+            @Html.ValidationMessageFor(model => model.TrangThai, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.HinhAnh, new { @class = "form-label" })
+            <input type="file" name="HinhAnh" class="form-control" />
+            <small class="text-muted">Chọn ảnh mới nếu muốn thay đổi.</small>
+            @Html.ValidationMessageFor(model => model.HinhAnh, "", new { @class = "text-danger" })
+        </div>
+
+        <button type="submit" class="btn btn-primary">Lưu Thay Đổi</button>
+        <a href="@Url.Action("DanhSachSan", "Admin")" class="btn btn-secondary">Quay lại</a>
+    }
+</div>
+
+<script>
+    // Bootstrap 5 validation
+    (function () {
+        'use strict';
+        var forms = document.querySelectorAll('.needs-validation');
+
+        Array.prototype.slice.call(forms).forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    })();
+</script>

@@ -1,0 +1,38 @@
+﻿@model IEnumerable<WebSanCauLong.Models.ViewModels.San>
+
+@{
+    ViewBag.Title = "DanhSachSanTrong";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<h2>Danh Sách Sân Còn Trống</h2>
+
+<form method="get">
+    <label>Thời gian bắt đầu:</label>
+    <input type="datetime-local" name="thoiGianBatDau" required />
+
+    <label>Thời gian kết thúc:</label>
+    <input type="datetime-local" name="thoiGianKetThuc" required />
+
+    <button type="submit">Tìm sân trống</button>
+</form>
+
+<table>
+    <tr>
+        <th>Tên Sân</th>
+        <th>Địa Chỉ</th>
+        <th>Giá Sân</th>
+        <th>Hành Động</th>
+    </tr>
+    @foreach (var san in Model)
+    {
+        <tr>
+            <td>@san.TenSan</td>
+            <td>@san.DiaChi</td>
+            <td>@san.GiaSan VNĐ</td>
+            <td>
+                <a href="@Url.Action("DatSan", "DatSan", new { sanId = san.SanID, thoiGianBatDau = Request["thoiGianBatDau"], thoiGianKetThuc = Request["thoiGianKetThuc"] })">Đặt sân</a>
+            </td>
+        </tr>
+    }
+</table>

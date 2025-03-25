@@ -1,0 +1,64 @@
+﻿@model IEnumerable<WebSanCauLong.Models.ViewModels.DatSan>
+
+@{
+    ViewBag.Title = "LichSuDatSan";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<h2>Lịch Sử Đặt Sân</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Mã Đặt Sân</th>
+            <th>Tên Sân</th>
+            <th>Thời Gian Bắt Đầu</th>
+            <th>Thời Gian Kết Thúc</th>
+            <th>Tổng Tiền</th>
+            <th>Trạng Thái</th>
+            <th>Thao Tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.DatSanID</td>
+                <td>@item.San.TenSan</td>
+                <td>@item.ThoiGianBatDau.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>@item.ThoiGianKetThuc.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>@item.TongTien.ToString("N0") VNĐ</td>
+                <td>
+                    <span class="badge @(item.TrangThai == "Đã hủy" ? "bg-danger" : "bg-info")">
+                        @item.TrangThai
+                    </span>
+                </td>
+                <td>
+                    @if (item.TrangThai == "Đang chờ")
+                    {
+                        using (Html.BeginForm("HuyDatSan", "DatSan", new { id = item.DatSanID }, FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Bạn có chắc chắn muốn hủy đặt sân này không?');">
+                                Hủy Đặt Sân
+                            </button>
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="@Url.Action("Index", "San")" class="btn btn-primary">Đặt sân mới</a>

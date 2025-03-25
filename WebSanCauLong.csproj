@@ -123,11 +123,15 @@
     <Compile Include="Controllers\AccountUserController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SanController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\DataModel.cs" />
+    <Compile Include="Models\ViewModels\Admin.cs" />
+    <Compile Include="Models\ViewModels\DatSan.cs" />
     <Compile Include="Models\ViewModels\KhachHang.cs" />
+    <Compile Include="Models\ViewModels\San.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -186,6 +190,15 @@
     <Content Include="Views\AccountUser\DangNhap.cshtml" />
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\DangNhap.cshtml" />
+    <Content Include="Views\Admin\DanhSachSan.cshtml" />
+    <Content Include="Views\Admin\ThemSan.cshtml" />
+    <Content Include="Views\Admin\SuaSan.cshtml" />
+    <Content Include="Views\Admin\XoaSan.cshtml" />
+    <Content Include="Views\San\DanhSachSanTrong.cshtml" />
+    <Content Include="Views\San\DatSan.cshtml" />
+    <Content Include="Views\San\XacNhanDatSan.cshtml" />
+    <Content Include="Views\San\LichSuDatSan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
