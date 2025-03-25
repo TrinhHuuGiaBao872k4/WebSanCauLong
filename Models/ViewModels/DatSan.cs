@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -17,35 +18,43 @@ namespace WebSanCauLong.Models.ViewModels
         [Required(ErrorMessage = "Vui lòng chọn sân.")]
         public int SanID { get; set; } // Sân được đặt
 
-        [Required(ErrorMessage = "Vui lòng nhập thời gian bắt đầu.")]
-        [DataType(DataType.DateTime)]
-        [FutureDate(ErrorMessage = "Thời gian bắt đầu phải ở tương lai.")]
-        public DateTime ThoiGianBatDau { get; set; } // Thời gian bắt đầu thuê sân
+        [Required(ErrorMessage = "Vui lòng nhập ngày đặt.")]
+        [DataType(DataType.Date)]
+        [FutureDate(ErrorMessage = "Ngày đặt phải từ ngày hiện tại trở đi.")]
+        public DateTime NgayDat { get; set; } // Ngày đặt sân
 
-        [Required(ErrorMessage = "Vui lòng nhập thời gian kết thúc.")]
-        [DataType(DataType.DateTime)]
-        [GreaterThan("ThoiGianBatDau", ErrorMessage = "Thời gian kết thúc phải sau thời gian bắt đầu.")]
-        public DateTime ThoiGianKetThuc { get; set; } // Thời gian kết thúc thuê sân
+        [Required(ErrorMessage = "Vui lòng nhập giờ bắt đầu.")]
+        [DataType(DataType.Time)]
+        public TimeSpan GioBatDau { get; set; } // Giờ bắt đầu thuê sân
+
+        [Required(ErrorMessage = "Vui lòng nhập giờ kết thúc.")]
+        [DataType(DataType.Time)]
+        [GreaterThan("GioBatDau", ErrorMessage = "Giờ kết thúc phải sau giờ bắt đầu.")]
+        public TimeSpan GioKetThuc { get; set; } // Giờ kết thúc thuê sân
 
         [Required(ErrorMessage = "Tổng tiền không được để trống.")]
         [Range(1000, double.MaxValue, ErrorMessage = "Tổng tiền phải lớn hơn 1000.")]
         public decimal TongTien { get; set; } // Tổng tiền thuê sân
 
         [Required(ErrorMessage = "Trạng thái không được để trống.")]
-        [RegularExpression("^(Đang chờ|Đã xác nhận|Đã hủy)$", ErrorMessage = "Trạng thái không hợp lệ.")]
-        public string TrangThai { get; set; } = "Đang chờ"; // Trạng thái đặt sân: "Đang chờ", "Đã xác nhận", "Đã hủy"
+        [RegularExpression("^(Đang chờ|Xác nhận|Đã hủy)$", ErrorMessage = "Trạng thái không hợp lệ.")]
+        public string TrangThai { get; set; } = "Đang chờ"; // Trạng thái đặt sân: "Đang chờ", "Xác nhận", "Đã hủy"
 
+        [ForeignKey("KhachHangID")]
         public virtual KhachHang KhachHang { get; set; }
+
+        [ForeignKey("SanID")]
         public virtual San San { get; set; }
     }
-    // Custom validation: Ngày đặt sân phải là tương lai
+
+    // Custom validation: Ngày đặt phải là tương lai hoặc hôm nay
     public class FutureDateAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             if (value is DateTime dateTime)
             {
-                if (dateTime <= DateTime.Now)
+                if (dateTime < DateTime.Now.Date)
                 {
                     return new ValidationResult(ErrorMessage);
                 }
@@ -54,7 +63,7 @@ namespace WebSanCauLong.Models.ViewModels
         }
     }
 
-    // Custom validation: Thời gian kết thúc phải lớn hơn thời gian bắt đầu
+    // Custom validation: Giờ kết thúc phải lớn hơn giờ bắt đầu
     public class GreaterThanAttribute : ValidationAttribute
     {
         private readonly string _comparisonProperty;
@@ -72,8 +81,8 @@ namespace WebSanCauLong.Models.ViewModels
                 return new ValidationResult($"Không tìm thấy thuộc tính {_comparisonProperty}");
             }
 
-            var comparisonValue = (DateTime)property.GetValue(validationContext.ObjectInstance);
-            if (value is DateTime currentValue)
+            var comparisonValue = (TimeSpan)property.GetValue(validationContext.ObjectInstance);
+            if (value is TimeSpan currentValue)
             {
                 if (currentValue <= comparisonValue)
                 {

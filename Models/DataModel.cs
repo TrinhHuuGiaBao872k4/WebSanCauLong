@@ -244,25 +244,35 @@ namespace WebSanCauLong.Models
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string sql = @"INSERT INTO DatSan (KhachHangID, SanID, ThoiGianBatDau, ThoiGianKetThuc, TongTien, TrangThai)
-                               VALUES (@KhachHangID, @SanID, @ThoiGianBatDau, @ThoiGianKetThuc, @TongTien, 'Đang chờ')";
+                string sql = @"
+            INSERT INTO DatSan (KhachHangID, SanID, NgayDat, GioBatDau, GioKetThuc, TongTien, TrangThai)
+            VALUES (@KhachHangID, @SanID, @NgayDat, @GioBatDau, @GioKetThuc, @TongTien, @TrangThai);
+            SELECT SCOPE_IDENTITY();"; // Lấy ID vừa chèn
 
                 SqlCommand command = new SqlCommand(sql, connection);
                 command.Parameters.AddWithValue("@KhachHangID", datSan.KhachHangID);
                 command.Parameters.AddWithValue("@SanID", datSan.SanID);
-                command.Parameters.AddWithValue("@ThoiGianBatDau", datSan.ThoiGianBatDau);
-                command.Parameters.AddWithValue("@ThoiGianKetThuc", datSan.ThoiGianKetThuc);
+                command.Parameters.AddWithValue("@NgayDat", datSan.NgayDat);
+                command.Parameters.AddWithValue("@GioBatDau", datSan.GioBatDau);
+                command.Parameters.AddWithValue("@GioKetThuc", datSan.GioKetThuc);
                 command.Parameters.AddWithValue("@TongTien", datSan.TongTien);
+                command.Parameters.AddWithValue("@TrangThai", datSan.TrangThai);
 
                 connection.Open();
-                int rowsAffected = command.ExecuteNonQuery();
-                return rowsAffected > 0;
+                object result = command.ExecuteScalar(); // Lấy ID mới
+
+                if (result != null)
+                {
+                    datSan.DatSanID = Convert.ToInt32(result); // Gán ID vào model
+                    return true;
+                }
+                return false;
             }
         }
 
         public bool HuyDatSan(int datSanID)
         {
-            string sql = "UPDATE DatSan SET TrangThai = 'Đã hủy' WHERE DatSanID = @DatSanID";
+            string sql = "UPDATE DatSan SET TrangThai = N'Đã hủy' WHERE DatSanID = @DatSanID";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -277,7 +287,11 @@ namespace WebSanCauLong.Models
         public DatSan GetDatSanById(int datSanID)
         {
             DatSan datSan = null;
-            string sql = "SELECT * FROM DatSan INNER JOIN San ON DatSan.SanID = San.SanID WHERE DatSanID = @DatSanID";
+            string sql = @"SELECT ds.DatSanID, ds.KhachHangID, ds.SanID, ds.NgayDat, ds.GioBatDau, ds.GioKetThuc, ds.TongTien, ds.TrangThai,
+                          s.SanID, s.TenSan, s.DiaChi
+                   FROM DatSan ds
+                   INNER JOIN San s ON ds.SanID = s.SanID
+                   WHERE ds.DatSanID = @DatSanID";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -294,8 +308,9 @@ namespace WebSanCauLong.Models
                             DatSanID = Convert.ToInt32(reader["DatSanID"]),
                             KhachHangID = Convert.ToInt32(reader["KhachHangID"]),
                             SanID = Convert.ToInt32(reader["SanID"]),
-                            ThoiGianBatDau = Convert.ToDateTime(reader["ThoiGianBatDau"]),
-                            ThoiGianKetThuc = Convert.ToDateTime(reader["ThoiGianKetThuc"]),
+                            NgayDat = Convert.ToDateTime(reader["NgayDat"]),
+                            GioBatDau = TimeSpan.Parse(reader["GioBatDau"].ToString()),
+                            GioKetThuc = TimeSpan.Parse(reader["GioKetThuc"].ToString()),
                             TongTien = Convert.ToDecimal(reader["TongTien"]),
                             TrangThai = reader["TrangThai"].ToString(),
                             San = new San
@@ -313,33 +328,40 @@ namespace WebSanCauLong.Models
         public List<DatSan> GetLichSuDatSan(int khachHangID)
         {
             List<DatSan> danhSachDatSan = new List<DatSan>();
-            string sql = @"SELECT d.*, s.TenSan 
-                   FROM DatSan d
-                   INNER JOIN San s ON d.SanID = s.SanID
-                   WHERE d.KhachHangID = @KhachHangID
-                   ORDER BY d.ThoiGianBatDau DESC";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
+                string sql = @"SELECT ds.*, s.TenSan, s.DiaChi 
+                       FROM DatSan ds
+                       JOIN San s ON ds.SanID = s.SanID
+                       WHERE ds.KhachHangID = @KhachHangID
+                       ORDER BY ds.NgayDat DESC";
+
                 SqlCommand command = new SqlCommand(sql, connection);
                 command.Parameters.AddWithValue("@KhachHangID", khachHangID);
+
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
+
                 while (reader.Read())
                 {
                     danhSachDatSan.Add(new DatSan
                     {
                         DatSanID = Convert.ToInt32(reader["DatSanID"]),
-                        KhachHangID = Convert.ToInt32(reader["KhachHangID"]),
                         SanID = Convert.ToInt32(reader["SanID"]),
-                        ThoiGianBatDau = Convert.ToDateTime(reader["ThoiGianBatDau"]),
-                        ThoiGianKetThuc = Convert.ToDateTime(reader["ThoiGianKetThuc"]),
+                        NgayDat = Convert.ToDateTime(reader["NgayDat"]),
+                        GioBatDau = TimeSpan.Parse(reader["GioBatDau"].ToString()),
+                        GioKetThuc = TimeSpan.Parse(reader["GioKetThuc"].ToString()),
                         TongTien = Convert.ToDecimal(reader["TongTien"]),
                         TrangThai = reader["TrangThai"].ToString(),
+
+                        // Lấy thông tin sân
                         San = new San
                         {
-                            TenSan = reader["TenSan"].ToString()
-                        }   
+                            SanID = Convert.ToInt32(reader["SanID"]),
+                            TenSan = reader["TenSan"].ToString(),
+                            DiaChi = reader["DiaChi"].ToString()
+                        }
                     });
                 }
             }

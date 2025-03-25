@@ -13,31 +13,30 @@ namespace WebSanCauLong.Controllers
     {
         private DataModel dataModel = new DataModel();
         // Lấy danh sách các sân còn trống
-        public ActionResult DanhSachSanTrong(DateTime? thoiGianBatDau, DateTime? thoiGianKetThuc)
+        public ActionResult DanhSachSanTrong(DateTime? ngayDat, TimeSpan? gioBatDau, TimeSpan? gioKetThuc)
         {
-            // Kiểm tra nếu thời gian không hợp lệ
-            if (!thoiGianBatDau.HasValue || !thoiGianKetThuc.HasValue || thoiGianBatDau >= thoiGianKetThuc)
+            // Kiểm tra nếu thời gian nhập vào không hợp lệ
+            if (!ngayDat.HasValue || !gioBatDau.HasValue || !gioKetThuc.HasValue || gioBatDau >= gioKetThuc)
             {
                 ViewBag.ErrorMessage = "Thời gian bắt đầu và kết thúc không hợp lệ.";
                 return View(new List<San>());
             }
 
-            // Lấy ngày từ thời gian bắt đầu
-            DateTime ngay = thoiGianBatDau.Value.Date;
-
-            // Lấy giờ bắt đầu và giờ kết thúc (chuyển về TimeSpan)
-            TimeSpan gioBatDau = thoiGianBatDau.Value.TimeOfDay;
-            TimeSpan gioKetThuc = thoiGianKetThuc.Value.TimeOfDay;
-
-            // Gọi phương thức GetSanTrong với đúng kiểu dữ liệu
-            var danhSachSanTrong = dataModel.GetSanTrong(ngay, gioBatDau, gioKetThuc);
+            // Gọi phương thức GetSanTrong để lấy danh sách sân trống dựa trên ngày và giờ đặt sân
+            var danhSachSanTrong = dataModel.GetSanTrong(ngayDat.Value, gioBatDau.Value, gioKetThuc.Value);
 
             return View(danhSachSanTrong);
         }
-        // Hiển thị form đặt sân
-        [Authorize] // Người dùng phải đăng nhập mới được đặt sân
-        public ActionResult DatSan(int sanId, DateTime thoiGianBatDau, DateTime thoiGianKetThuc)
+
+        [HttpGet]
+        public ActionResult DatSan(int sanId, DateTime ngayDat, TimeSpan gioBatDau, TimeSpan gioKetThuc)
         {
+            var user = (KhachHang)Session["User"];
+            if (user == null)
+            {
+                return RedirectToAction("DangNhap", "AccountUser");
+            }
+
             var san = dataModel.GetSanById(sanId);
             if (san == null)
             {
@@ -47,35 +46,35 @@ namespace WebSanCauLong.Controllers
             var model = new DatSan
             {
                 SanID = san.SanID,
-                ThoiGianBatDau = thoiGianBatDau,
-                ThoiGianKetThuc = thoiGianKetThuc,
-                TongTien = (decimal)((thoiGianKetThuc - thoiGianBatDau).TotalHours * (double)san.GiaSan)
+                NgayDat = ngayDat, // Chỉ lấy ngày đặt
+                GioBatDau = gioBatDau,
+                GioKetThuc = gioKetThuc,
+                TongTien = (decimal)((gioKetThuc - gioBatDau).TotalHours * (double)san.GiaSan)
             };
 
             return View(model);
         }
 
-        // Xử lý đặt sân
+        // Xử lý đặt sân (Kiểm tra đăng nhập thủ công)
         [HttpPost]
-        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult DatSan(DatSan model)
         {
+            var user = (KhachHang)Session["User"];
+            if (user == null)
+            {
+                return RedirectToAction("DangNhap", "AccountUser");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            var user = (KhachHang)Session["User"];
-            if (user == null)
+            // Kiểm tra thời gian hợp lệ
+            if (model.GioBatDau >= model.GioKetThuc)
             {
-                return RedirectToAction("DangNhap", "KhachHang");
-            }
-
-            // Kiểm tra thời gian đặt sân hợp lệ
-            if (model.ThoiGianBatDau >= model.ThoiGianKetThuc)
-            {
-                ModelState.AddModelError("", "Thời gian kết thúc phải lớn hơn thời gian bắt đầu.");
+                ModelState.AddModelError("", "Giờ kết thúc phải lớn hơn giờ bắt đầu.");
                 return View(model);
             }
 
@@ -83,10 +82,10 @@ namespace WebSanCauLong.Controllers
             model.TrangThai = "Đang chờ";
 
             bool success = dataModel.DatSan(model);
-            int datSanID = model.DatSanID;
-            if (success)
+
+            if (success && model.DatSanID > 0)
             {
-                return RedirectToAction("XacNhanDatSan", new { id = datSanID });
+                return RedirectToAction("XacNhanDatSan", new { id = model.DatSanID });
             }
             else
             {
@@ -101,11 +100,11 @@ namespace WebSanCauLong.Controllers
             {
                 return HttpNotFound();
             }
+            datSan.San = dataModel.GetSanById(datSan.SanID);
             return View(datSan);
         }
 
         [HttpPost]
-        [Authorize]
         public ActionResult HuyDatSan(int id)
         {
             var datSan = dataModel.GetDatSanById(id);
@@ -135,16 +134,15 @@ namespace WebSanCauLong.Controllers
             return RedirectToAction("LichSuDatSan");
         }
 
-        [Authorize]
         public ActionResult LichSuDatSan()
         {
-            int khachHangID = Convert.ToInt32(Session["KhachHangID"]); // Lấy ID khách hàng từ session
-            if (khachHangID == 0)
+            var user = (KhachHang)Session["User"];
+            if (user == null)
             {
-                return RedirectToAction("DangNhap", "KhachHang");
+                return RedirectToAction("DangNhap", "AccountUser");
             }
 
-            var lichSu = dataModel.GetLichSuDatSan(khachHangID);
+            var lichSu = dataModel.GetLichSuDatSan(user.KhachHangID);
             return View(lichSu);
         }
     }

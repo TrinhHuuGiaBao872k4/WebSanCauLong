@@ -1,38 +1,60 @@
 ﻿@model IEnumerable<WebSanCauLong.Models.ViewModels.San>
 
 @{
-    ViewBag.Title = "DanhSachSanTrong";
+    ViewBag.Title = "Danh Sách Sân Còn Trống";
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
 
-<h2>Danh Sách Sân Còn Trống</h2>
+<h2 class="mb-4">Danh Sách Sân Còn Trống</h2>
 
-<form method="get">
-    <label>Thời gian bắt đầu:</label>
-    <input type="datetime-local" name="thoiGianBatDau" required />
-
-    <label>Thời gian kết thúc:</label>
-    <input type="datetime-local" name="thoiGianKetThuc" required />
-
-    <button type="submit">Tìm sân trống</button>
+<!-- Form tìm kiếm sân trống -->
+<form method="get" class="mb-4">
+    <div class="row g-3">
+        <div class="col-md-4">
+            <label class="form-label">Ngày đặt:</label>
+            <input type="date" name="ngayDat" value="@Request.QueryString["ngayDat"]" class="form-control" required />
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Giờ bắt đầu:</label>
+            <input type="time" name="gioBatDau" value="@Request.QueryString["gioBatDau"]" class="form-control" required />
+        </div>
+        <div class="col-md-3">
+            <label class="form-label">Giờ kết thúc:</label>
+            <input type="time" name="gioKetThuc" value="@Request.QueryString["gioKetThuc"]" class="form-control" required />
+        </div>
+        <div class="col-md-2 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary w-100">Tìm sân</button>
+        </div>
+    </div>
 </form>
 
-<table>
-    <tr>
-        <th>Tên Sân</th>
-        <th>Địa Chỉ</th>
-        <th>Giá Sân</th>
-        <th>Hành Động</th>
-    </tr>
-    @foreach (var san in Model)
-    {
-        <tr>
-            <td>@san.TenSan</td>
-            <td>@san.DiaChi</td>
-            <td>@san.GiaSan VNĐ</td>
-            <td>
-                <a href="@Url.Action("DatSan", "DatSan", new { sanId = san.SanID, thoiGianBatDau = Request["thoiGianBatDau"], thoiGianKetThuc = Request["thoiGianKetThuc"] })">Đặt sân</a>
-            </td>
-        </tr>
-    }
-</table>
+<!-- Hiển thị danh sách sân -->
+@if (Model != null && Model.Any())
+{
+    <div class="row">
+        @foreach (var san in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">@san.TenSan</h5>
+                        <p class="card-text"><strong>Địa chỉ:</strong> @san.DiaChi</p>
+                        <p class="card-text"><strong>Giá sân:</strong> @san.GiaSan VNĐ</p>
+                        <a href="@Url.Action("DatSan", "San", new {
+                            sanId = san.SanID,
+                            ngayDat = Request.QueryString["ngayDat"],
+                            gioBatDau = Request.QueryString["gioBatDau"],
+                            gioKetThuc = Request.QueryString["gioKetThuc"]
+                        })" class="btn btn-success w-100">Đặt sân</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="alert alert-warning" role="alert">
+        Không có sân trống trong khoảng thời gian này.
+    </div>
+}

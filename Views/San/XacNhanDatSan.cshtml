@@ -1,8 +1,25 @@
-﻿
+﻿@model WebSanCauLong.Models.ViewModels.DatSan
 @{
     ViewBag.Title = "XacNhanDatSan";
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
 
-<h2>XacNhanDatSan</h2>
+<div class="alert alert-success text-center" role="alert">
+    <h4 class="alert-heading">🎉 Đặt sân thành công! 🎾</h4>
+    <p>Chúc mừng! Bạn đã đặt sân thành công. Dưới đây là thông tin chi tiết về sân đã đặt.</p>
+</div>
 
+<div class="card shadow-sm p-4">
+    <h4 class="text-primary">@Model.San.TenSan</h4>
+    <p><strong>📍 Địa chỉ:</strong> @Model.San.DiaChi</p>
+    <p><strong>📅 Ngày đặt:</strong> @Model.NgayDat.ToString("dd/MM/yyyy")</p>
+    <p><strong>⏰ Giờ bắt đầu:</strong> @Model.GioBatDau</p>
+    <p><strong>⏳ Giờ kết thúc:</strong> @Model.GioKetThuc</p>
+    <p><strong>💰 Giá sân:</strong> @Model.San.GiaSan VNĐ/giờ</p>
+    <p><strong>💵 Tổng tiền:</strong> @Model.TongTien VNĐ</p>
+
+    <div class="d-flex justify-content-center mt-4">
+        <a href="@Url.Action("DanhSachSanTrong", "San")" class="btn btn-primary me-2">🔍 Tiếp tục đặt sân</a>
+        <a href="@Url.Action("Index", "Home")" class="btn btn-success">🏠 Về trang chủ</a>
+    </div>
+</div>

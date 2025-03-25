@@ -10,7 +10,7 @@
     <meta name='copyright' content=''>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="icon" type="image/png" href="~/images/">
-    <link rel="stylesheet" href="~/Content/bootstrap.css">
+    @*<link rel="stylesheet" href="~/Content/bootstrap.css">*@
     <link rel="stylesheet" href="~/Content/magnific-popup.min.css">
     <link rel="stylesheet" href="~/Content/font-awesome.css">
     <link rel="stylesheet" href="~/Content/jquery.fancybox.min.css">
@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="~/Content/reset.css">
     <link rel="stylesheet" href="~/Content/css.css">
     <link rel="stylesheet" href="~/Content/responsive.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
 
@@ -133,22 +134,34 @@
                                 <a href="#" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
                                 </div>*@
 
-                            <div class="sinlge-bar">
-                                @if (Session["User"] == null || Session["User"].ToString() == "")
-                                {
-                                    <a href="#" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
-                                }
-                                else
-                                {
-                                    <a @*href="@Url.Action("Profile","Nguoidung")"*@ class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
-                                }
-                            </div>
-                            <div class="sinlge-bar shopping">
-                                <a @*href="@Url.Action("Giohang","Giohang")" *@="single-icon">
+                        <div class="sinlge-bar">
+                            @if (Session["User"] == null || Session["User"].ToString() == "")
+                            {
+                                <a href="@Url.Action("DangNhap", "AccountUser")" class="single-icon">
+                                    <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                </a>
+                            }
+                            else
+                            {
+                                <div class="dropdown ">
+                                    <a class="dropdown-toggle text-decoration-none" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                    </a>
+
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="@Url.Action("Profile", "AccountUser")">Hồ sơ</a></li>
+                                        <li><a class="dropdown-item" href="@Url.Action("LichSuDatSan", "San")">Lịch sử đặt sân</a></li>
+                                        <li><a class="dropdown-item" href="@Url.Action("Logout", "AccountUser")">Đăng xuất</a></li>
+                                    </ul>
+                                </div>
+                            }
+                        </div>
+                           @* <div class="sinlge-bar shopping">
+                                <a href="@Url.Action("Giohang","Giohang")"="single-icon">
                                     <i class="ti-bag"></i>@if (ViewBag.Tongsoluong != null)
                                     {<span class="total-count">@ViewBag.Tongsoluong</span>}
                                 </a>
-                            </div>
+                            </div>*@
                         </div>
                     </div>
                 </div>
@@ -416,7 +429,7 @@
     <!-- Popper JS -->
     <script src="~/Scripts/popper.min.js"></script>
     <!-- Bootstrap JS -->
-    <script src="~/Scripts/bootstrap.min.js"></script>
+    @*<script src="~/Scripts/bootstrap.min.js"></script>*@
     <!-- Color JS -->
     <script src="~/Scripts/colors.js"></script>
     <!-- Slicknav JS -->
@@ -460,5 +473,7 @@
             });
         }
     </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

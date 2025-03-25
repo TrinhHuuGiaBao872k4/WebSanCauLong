@@ -1,10 +1,9 @@
 ﻿@model IEnumerable<WebSanCauLong.Models.ViewModels.DatSan>
 
 @{
-    ViewBag.Title = "LichSuDatSan";
+    ViewBag.Title = "Lịch Sử Đặt Sân";
     Layout = "~/Views/Shared/_LayoutUser.cshtml";
 }
-
 <h2>Lịch Sử Đặt Sân</h2>
 
 @if (TempData["SuccessMessage"] != null)
@@ -22,6 +21,7 @@
         <tr>
             <th>Mã Đặt Sân</th>
             <th>Tên Sân</th>
+            <th>Địa Chỉ</th>
             <th>Thời Gian Bắt Đầu</th>
             <th>Thời Gian Kết Thúc</th>
             <th>Tổng Tiền</th>
@@ -35,8 +35,9 @@
             <tr>
                 <td>@item.DatSanID</td>
                 <td>@item.San.TenSan</td>
-                <td>@item.ThoiGianBatDau.ToString("dd/MM/yyyy HH:mm")</td>
-                <td>@item.ThoiGianKetThuc.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>@item.San.DiaChi</td>
+                <td>@item.GioBatDau.ToString(@"hh\:mm")</td>
+                <td>@item.GioKetThuc.ToString(@"hh\:mm")</td>
                 <td>@item.TongTien.ToString("N0") VNĐ</td>
                 <td>
                     <span class="badge @(item.TrangThai == "Đã hủy" ? "bg-danger" : "bg-info")">
@@ -46,7 +47,7 @@
                 <td>
                     @if (item.TrangThai == "Đang chờ")
                     {
-                        using (Html.BeginForm("HuyDatSan", "DatSan", new { id = item.DatSanID }, FormMethod.Post))
+                        using (Html.BeginForm("HuyDatSan", "San", new { id = item.DatSanID }, FormMethod.Post))
                         {
                             @Html.AntiForgeryToken()
                             <button type="submit" class="btn btn-danger btn-sm"
