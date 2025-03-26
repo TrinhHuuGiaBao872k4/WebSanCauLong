@@ -34,7 +34,7 @@
         <!-- Sidebar -->
         <div class="sidebar bg-white text-slate-600 w-64 transition-all duration-300 fixed h-full shadow-sm">
             <div class="flex items-center space-x-3 p-4 border-b border-slate-100">
-                <img src="~/images/" alt="Logo" class="w-8 h-8">
+                <img src="~/images/badminshoplogo.png" alt="Logo" class="w-8 h-8">
                 <span class="text-lg font-semibold text-slate-800">HUFLIT BADMINTON</span>
             </div>
 
@@ -52,7 +52,7 @@
                     </a>
                 </li>
                 <li class="nav-item mx-2">
-                    <a href="/Admin/DonHang" class="flex items-center p-3 rounded-lg">
+                    <a href="/Admin/DuyetDatSan" class="flex items-center p-3 rounded-lg">
                         <i class="fa-solid fa-file-signature"></i>
                         <span class="nav-text ml-3">Đơn Đặt Sân</span>
                     </a>
@@ -82,7 +82,7 @@
                     </a>
                 </li>
                 <li class="nav-item mx-2">
-                    <a href="/Admin/Logout" class="flex items-center p-3 rounded-lg text-red-600 hover:bg-red-500 hover:text-white">
+                    <a href="@Url.Action("DangXuat","Admin")" class="flex items-center p-3 rounded-lg text-red-600 hover:bg-red-500 hover:text-white">
                         <i class="fa fa-sign-out-alt w-6"></i>
                         <span class="nav-text ml-3">Đăng Xuất</span>
                     </a>

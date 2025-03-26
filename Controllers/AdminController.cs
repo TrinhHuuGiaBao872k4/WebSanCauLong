@@ -155,5 +155,37 @@ namespace WebSanCauLong.Controllers
             _dataModel.XoaSan(id);
             return RedirectToAction("DanhSachSan");
         }
+
+        public ActionResult DuyetDatSan()
+        {
+            if (Session["Admin"] == null)
+            {
+                return RedirectToAction("DangNhap");
+            }
+
+            var danhSachDatSan = _dataModel.GetAllDatSan();
+            return View(danhSachDatSan);
+        }
+        
+        public ActionResult XacNhanDatSanCuaKhach(int id)
+        {
+            if (Session["Admin"] == null)
+            {
+                return RedirectToAction("DangNhap");
+            }
+
+            bool thanhCong = _dataModel.XacNhanDatSan(id);
+
+            if (thanhCong)
+            {
+                TempData["SuccessMessage"] = "Xác nhận đặt sân thành công!";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Xác nhận thất bại! Sân có thể đã bị đặt hoặc lỗi hệ thống.";
+            }
+
+            return RedirectToAction("DuyetDatSan");
+        }
     }
 }

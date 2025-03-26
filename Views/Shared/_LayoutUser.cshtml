@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="~/Content/css.css">
     <link rel="stylesheet" href="~/Content/responsive.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
 </head>
 <body>
 
@@ -85,13 +86,13 @@
         <!-- End Topbar -->
         <div class="middle-inner">
             <div class="container">
-                <div class="row">
+                <div class="row d-flex align-items-center" >
                     <!-- Logo and Search Container -->
-                    <div class="col-lg-2 col-md-2 col-12">
+                    <div class="col-lg-2 col-md-2 col-12 d-flex justify-content-center">
                         <!-- Logo -->
-                        <div class="logo" style="display: flex; align-items: flex-start; margin-top: 1px;">
+                        <div class="logo" >
                             <a @*href="@Url.Action("Index","BookStore")"*@ style="display: block;">
-                                <img src="~/images/" alt="logo" style="max-height: 50px; width: auto;">
+                                <img src="~/images/badminshoplogo.png" alt="logo" style="max-height: 100px; width: auto;">
                             </a>
                         </div>
 
@@ -108,7 +109,7 @@
 
                         <div class="mobile-nav"></div>
                     </div>
-                    <div class="col-lg-8 col-md-7 col-12">
+                    <div class="col-lg-8 col-md-7 col-12 d-flex justify-content-center">
                         <div class="search-bar-top">
                             <div class="search-bar">
                                 @*<select>
@@ -124,7 +125,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-md-3 col-12">
+                    <div class="col-lg-2 col-md-3 col-12" >
                         <div class="right-bar">
                             <!-- Search Form -->
                             <div class="sinlge-bar">
@@ -134,28 +135,28 @@
                                 <a href="#" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
                                 </div>*@
 
-                        <div class="sinlge-bar">
-                            @if (Session["User"] == null || Session["User"].ToString() == "")
-                            {
-                                <a href="@Url.Action("DangNhap", "AccountUser")" class="single-icon">
-                                    <i class="fa fa-user-circle-o" aria-hidden="true"></i>
-                                </a>
-                            }
-                            else
-                            {
-                                <div class="dropdown ">
-                                    <a class="dropdown-toggle text-decoration-none" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <div class="sinlge-bar">
+                                @if (Session["User"] == null || Session["User"].ToString() == "")
+                                {
+                                    <a href="@Url.Action("DangNhap", "AccountUser")" class="single-icon">
                                         <i class="fa fa-user-circle-o" aria-hidden="true"></i>
                                     </a>
+                                }
+                                else
+                                {
+                                    <div class="dropdown ">
+                                        <a class="dropdown-toggle text-decoration-none" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                        </a>
 
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="@Url.Action("Profile", "AccountUser")">Hồ sơ</a></li>
-                                        <li><a class="dropdown-item" href="@Url.Action("LichSuDatSan", "San")">Lịch sử đặt sân</a></li>
-                                        <li><a class="dropdown-item" href="@Url.Action("Logout", "AccountUser")">Đăng xuất</a></li>
-                                    </ul>
-                                </div>
-                            }
-                        </div>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="@Url.Action("Profile", "AccountUser")">Hồ sơ</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("LichSuDatSan", "San")">Lịch sử đặt sân</a></li>
+                                            <li><a class="dropdown-item" href="@Url.Action("Logout", "AccountUser")">Đăng xuất</a></li>
+                                        </ul>
+                                    </div>
+                                }
+                            </div>
                            @* <div class="sinlge-bar shopping">
                                 <a href="@Url.Action("Giohang","Giohang")"="single-icon">
                                     <i class="ti-bag"></i>@if (ViewBag.Tongsoluong != null)
@@ -208,7 +209,7 @@
     <!-- Slider Area -->
     <section class="hero-slider text-right">
         <!-- Single Slider -->
-        <div class="single-slider">
+        @*<div class="single-slider">
             <div class="container">
                 <div class="row no-gutters">
                     <div class="col-12">
@@ -216,9 +217,9 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="hero-text">
-                                        @*<div class="button">
+                                        <div class="button">
                                                     <a href="#" class="btn">Xem Thêm</a>
-                                            </div>*@
+                                            </div>
                                     </div>
                                 </div>
                             </div>
@@ -226,7 +227,8 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>*@
+        <img src="~/Content/images/banner1.png" />
         <!--/ End Single Slider -->
     </section>
     <!--/ End Slider Area -->
@@ -248,36 +250,36 @@
                 <div class="col-lg-3 col-md-6 col-12">
                     <!-- Start Single Service -->
                     <div class="single-service">
-                        <i class="ti-rocket"></i>
-                        <h4>Free shiping</h4>
-                        <p>Với đơn hàng trên 200.000VNĐ</p>
+                        <i class="ti-calendar"></i>
+                        <h4>Đặt Sân Nhanh Chóng</h4>
+                        <p>Đặt sân dễ dàng chỉ trong vài phút</p>
                     </div>
                     <!-- End Single Service -->
                 </div>
                 <div class="col-lg-3 col-md-6 col-12">
                     <!-- Start Single Service -->
                     <div class="single-service">
-                        <i class="ti-reload"></i>
-                        <h4>Miễn Phí Đổi Trả</h4>
-                        <p>Đổi hàng khi bị lỗi</p>
+                        <i class="ti-wallet"></i>
+                        <h4>Thanh Toán Linh Hoạt</h4>
+                        <p>Hỗ trợ nhiều phương thức thanh toán</p>
                     </div>
                     <!-- End Single Service -->
                 </div>
                 <div class="col-lg-3 col-md-6 col-12">
                     <!-- Start Single Service -->
                     <div class="single-service">
-                        <i class="ti-lock"></i>
-                        <h4>Bảo Mật</h4>
-                        <p>Bảo mật giao hàng</p>
+                        <i class="ti-check"></i>
+                        <h4>Đảm Bảo Chất Lượng</h4>
+                        <p>Sân chơi đạt tiêu chuẩn, trang bị hiện đại</p>
                     </div>
                     <!-- End Single Service -->
                 </div>
                 <div class="col-lg-3 col-md-6 col-12">
                     <!-- Start Single Service -->
                     <div class="single-service">
-                        <i class="ti-tag"></i>
-                        <h4>Siêu Tiết Kiệm</h4>
-                        <p>Mua hàng giá rẻ</p>
+                        <i class="ti-gift"></i>
+                        <h4>Ưu Đãi Thành Viên</h4>
+                        <p>Nhận ưu đãi hấp dẫn khi đặt sân thường xuyên</p>
                     </div>
                     <!-- End Single Service -->
                 </div>
@@ -335,7 +337,7 @@
                         <div class="single-footer about">
                             <div class="logo" style="max-width: 250px; margin-bottom: 15px;">
                                 <a @*href="@Url.Action("Index","BookStore")"*@>
-                                    <img src="~/images/bookshoplo.png" alt="#" style="max-width: 100%; height: auto;">
+                                    <img src="~/images/badshoplogo.png" alt="#" style="max-width: 100%; height: auto;">
                                 </a>
                             </div>
                             <p class="text" style="font-size: 14px; margin-bottom: 10px;">Website đặt sân trực tuyến của HUFLIT BADMINTON, hỗ trợ 24/7 cùng nhiều ưu đẫi hấp dẫn. Luôn luôn cập nhật thông tin của các sân cầu lông nhanh nhất.</p>

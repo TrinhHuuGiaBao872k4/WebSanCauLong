@@ -28,7 +28,12 @@
 
         <div class="mb-3">
             @Html.LabelFor(model => model.LoaiSan, new { @class = "form-label" })
-            @Html.TextBoxFor(model => model.LoaiSan, new { @class = "form-control", placeholder = "Nhập loại sân", required = "required" })
+            
+            @Html.DropDownListFor(model => model.LoaiSan, new SelectList(new[]
+            {
+                new { Value = "Trong nhà", Text = "Trong nhà" },
+                new { Value = "Ngoài trời", Text = "Ngoài trời" }
+            }, "Value", "Text"), "Chọn loại sân", new { @class = "form-select", required = "required" })
             <div class="invalid-feedback">Vui lòng nhập loại sân.</div>
             @Html.ValidationMessageFor(model => model.LoaiSan, "", new { @class = "text-danger" })
         </div>
@@ -50,7 +55,8 @@
             @Html.LabelFor(model => model.TrangThai, new { @class = "form-label" })
             @Html.DropDownListFor(model => model.TrangThai, new SelectList(new[]
             {
-                new { Value = "Hoạt động", Text = "Hoạt động" },
+                new { Value = "Còn trống", Text = "Còn trống" },
+                new { Value = "Đang được đặt", Text = "Đang được đặt" },
                 new { Value = "Bảo trì", Text = "Bảo trì" }
             }, "Value", "Text"), "Chọn trạng thái", new { @class = "form-select", required = "required" })
             <div class="invalid-feedback">Vui lòng chọn trạng thái sân.</div>

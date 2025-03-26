@@ -51,13 +51,14 @@
             left: 50%;
             transform: translateX(-50%);
             width: 90%;
-            background-color:orange;
+            background-color: orange;
             color: white;
             padding: 10px;
             border-radius: 8px;
             font-weight: bold;
             text-align: center;
         }
+
         .section-title-wrap {
             background-color: orange; /* Nền xanh lá */
             border-radius: 12px;
@@ -78,11 +79,50 @@
             color: white;
             margin-left: 20px; /* Tạo khoảng cách giữa chữ và ảnh */
         }
+
+        .booking-container {
+            background-color: orange;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            border-radius: 10px;
+            height:150px;
+        }
+
+        .court-status {
+            display: flex;
+            align-items: center;
+        }
+
+        .status-bar {
+            width: 100%;
+            height: 20px;
+            border-radius: 5px;
+            overflow: hidden;
+            display: flex;
+        }
+
+        .available {
+            background-color: #28a745;
+        }
+
+        .reserved {
+            background-color: #dc3545;
+        }
+
+        .holding {
+            background-color: #fd7e14;
+        }
     </style>
 </head>
 <body>
     <div class="container mt-5">
-        <h2 class="text-center mb-4">Danh Sách Sân Cầu Lông</h2>
+        <div class="booking-container mb-4">
+            <img src="~/images/badminshoplogo.png" alt="Logo" class="rounded-circle" width="100">
+            <h2>DANH SÁCH CÁC SÂN CẦU LÔNG</h2>
+        </div>
         <div class="row">
             @foreach (var san in Model)
             {
@@ -100,7 +140,7 @@
             }
         </div>
     </div>
-    <section class="projects section-padding" id="refs_library">
+    <section class="projects section-padding" id="refs_library" style="margin-top:150px">
         <div class="container">
             <div class="row">
 

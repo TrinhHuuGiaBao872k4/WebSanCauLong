@@ -367,5 +367,54 @@ namespace WebSanCauLong.Models
             }
             return danhSachDatSan;
         }
+
+        public List<DatSan> GetAllDatSan()
+        {
+            List<DatSan> danhSachDatSan = new List<DatSan>();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string sql = @"SELECT ds.*, s.TenSan, kh.HoTen 
+                       FROM DatSan ds
+                       JOIN San s ON ds.SanID = s.SanID
+                       JOIN KhachHang kh ON ds.KhachHangID = kh.KhachHangID";
+
+                SqlCommand command = new SqlCommand(sql, connection);
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    danhSachDatSan.Add(new DatSan
+                    {
+                        DatSanID = Convert.ToInt32(reader["DatSanID"]),
+                        KhachHangID = Convert.ToInt32(reader["KhachHangID"]),
+                        SanID = Convert.ToInt32(reader["SanID"]),
+                        NgayDat = Convert.ToDateTime(reader["NgayDat"]),
+                        GioBatDau = TimeSpan.Parse(reader["GioBatDau"].ToString()),
+                        GioKetThuc = TimeSpan.Parse(reader["GioKetThuc"].ToString()),
+                        TongTien = reader["TongTien"] != DBNull.Value ? Convert.ToDecimal(reader["TongTien"]) : 0,
+                        TrangThai = reader["TrangThai"].ToString(),
+                        San = new San { TenSan = reader["TenSan"].ToString() },
+                        KhachHang = new KhachHang { HoTen = reader["HoTen"].ToString() }
+                    });
+                }
+            }
+            return danhSachDatSan;
+        }
+        public bool XacNhanDatSan(int datSanID)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string sql = @"UPDATE DatSan SET TrangThai = N'Xác nhận' WHERE DatSanID = @DatSanID AND TrangThai = N'Đang chờ'";
+
+                SqlCommand command = new SqlCommand(sql, connection);
+                command.Parameters.AddWithValue("@DatSanID", datSanID);
+
+                connection.Open();
+                int rowsAffected = command.ExecuteNonQuery();
+                return rowsAffected > 0;
+            }
+        }
     }
 }

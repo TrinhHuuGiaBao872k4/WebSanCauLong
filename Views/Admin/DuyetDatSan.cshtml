@@ -1,42 +1,10 @@
-﻿@model IEnumerable<WebSanCauLong.Models.ViewModels.San>
+﻿@model IEnumerable<WebSanCauLong.Models.ViewModels.DatSan>
 
 @{
-    ViewBag.Title = "DanhSachSan";
+    ViewBag.Title = "Duyệt Đặt Sân";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-@*<h2>Quản lý sân</h2>
-    <a href="@Url.Action("ThemSan", "Admin")" class="btn btn-success">Thêm sân mới</a>
-    <table class="table table-bordered mt-3">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Tên sân</th>
-                <th>Địa chỉ</th>
-                <th>Loại sân</th>
-                <th>Giá</th>
-                <th>Trạng thái</th>
-                <th>Thao tác</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var san in Model)
-            {
-                <tr>
-                    <td>@san.SanID</td>
-                    <td>@san.TenSan</td>
-                    <td>@san.DiaChi</td>
-                    <td>@san.LoaiSan</td>
-                    <td>@san.GiaSan</td>
-                    <td>@san.TrangThai</td>
-                    <td>
-                        <a href="@Url.Action("SuaSan", "Admin", new { id = san.SanID })" class="btn btn-warning">Sửa</a>
-                        <a href="@Url.Action("XoaSan", "Admin", new { id = san.SanID })" class="btn btn-danger">Xóa</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>*@
 <!DOCTYPE html>
 <html>
 <head>
@@ -281,7 +249,6 @@
                 font-size: 1.5rem;
             }
         }
-
         .disabled {
             background-color: #ccc;
             cursor: not-allowed;
@@ -292,42 +259,63 @@
 <body>
     <div class="container">
         <div class="page-header">
-            <h2 class="page-title">Quản lý sân</h2>
-            <a href="@Url.Action("ThemSan", "Admin")" class="action-button edit-button">➕ Thêm sân mới</a>
+            <h2 class="page-title">Đơn đặt sân</h2>
         </div>
 
         <table class="order-table">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Tên sân</th>
-                    <th>Địa chỉ</th>
-                    <th>Loại sân</th>
-                    <th>Giá</th>
+                    <th>Mã đặt sân</th>
+                    <th>Tên khách hàng</th>
+                    <th>Sân đặt</th>
+                    <th>Ngày đặt</th>
+                    <th>Giờ bắt đầu</th>
+                    <th>Giờ kết thúc</th>
                     <th>Trạng thái</th>
                     <th>Thao tác</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var san in Model)
+                @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@san.SanID</td>
-                        <td>@san.TenSan</td>
-                        <td>@san.DiaChi</td>
-                        <td>@san.LoaiSan</td>
-                        <td>@san.GiaSan.ToString("N0") VND</td>
+                        <td>@item.DatSanID</td>
+                        <td>
+                            @*@Html.ActionLink(item.KhachHang.HoTen, "ChiTietKhachHang", new { id = item.MaKhachHang }, new { @class = "user-link" })*@
+                            @item.KhachHang.HoTen
+                        </td>
+                        <td>@item.San.TenSan</td>
+                        <td>@item.NgayDat.ToString("dd/MM/yyyy")</td>
+                        <td>@item.GioBatDau.ToString(@"hh\:mm")</td>
+                        <td>@item.GioKetThuc.ToString(@"hh\:mm")</td>
                         <td class="text-center">
-                            <span class="status-badge @(san.TrangThai == "Hoạt động" ? "success" : "danger")">
-                                @san.TrangThai
-                            </span>
+                            @{
+                                if (item.TrangThai == "Đang chờ")
+                                {
+                                    <span class="status-badge pending">Đang chờ</span>
+                                }
+                                else if (item.TrangThai == "Xác nhận")
+                                {
+                                    <span class="status-badge success">Xác nhận</span>
+                                }
+                                else if (item.TrangThai == "Đã hủy")
+                                {
+                                    <span class="status-badge danger">Đã hủy</span>
+                                }
+                            }
                         </td>
                         <td>
-                            <div class="">
-                                @*<a href="@Url.Action("SuaSan", "Admin", new { id = san.SanID })" class="action-button edit-button">✏️ Sửa</a>
-                                <button onclick="confirmDelete(@san.SanID)" class="btn btn-danger">🗑️ Xóa</button>*@
-                                <a href="@Url.Action("SuaSan", "Admin", new { id = san.SanID })" class="action-button edit-button">✏️ Sửa</a>
-                                <a href="@Url.Action("XoaSan", "Admin", new { id = san.SanID })" class="action-button" style="background-color:red">🗑️ Xóa</a>
+                            <div class="action-buttons">
+                                @if (item.TrangThai == "Đang chờ")
+                                {
+                                    @Html.ActionLink("✔️ Duyệt", "XacNhanDatSanCuaKhach", new { id = item.DatSanID }, new { @class = "action-button edit-button" })
+                                }
+                                else
+                                {
+                                    <button class="action-button edit-button disabled" disabled>✔️ Duyệt</button>
+                                }
+
+                                @Html.ActionLink("👁️ Chi tiết", "ChiTietDatSan", new { id = item.DatSanID }, new { @class = "action-button detail-button" })
                             </div>
                         </td>
                     </tr>
@@ -335,15 +323,5 @@
             </tbody>
         </table>
     </div>
-
-    @*<script>
-    function confirmDelete(id) {
-        if (confirm("Bạn có chắc chắn muốn xóa sân này không?")) {
-            window.location.href = '@Url.Action("XoaSan", "Admin")/' + id;
-        }
-    }
-    </script>*@
-
 </body>
 </html>
-
